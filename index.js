@@ -32,7 +32,7 @@ async function getTokenData(tokenAddress) {
     const res = await axios.get(`https://api.dexscreener.com/tokens/v1/solana/${tokenAddress}`);
     return res.data?.[0];
   } catch (err) {
-    console.error(`Failed to fetch token data for ${tokenAddress}`);
+    console.error(`❌ Failed to fetch token data for ${tokenAddress}:`, err.message);
     return null;
   }
 }
@@ -71,11 +71,14 @@ async function runCheck() {
 
   for (const t of tokens) {
     const tokenAddress = t.tokenAddress;
-    checkedTokens.add(tokenAddress);
+
+    // Skip if already checked
+    if (checkedTokens.has(tokenAddress)) continue;
 
     const data = await getTokenData(tokenAddress);
     if (data && isEligible(data)) {
       await sendToDiscord(data);
+      checkedTokens.add(tokenAddress); // Only mark as checked if alert is sent
     }
 
     await sleep(1500); // Avoid burst API calls
@@ -86,7 +89,7 @@ async function runCheck() {
 (async function loopForever() {
   while (true) {
     console.log("🔄 Checking for new bonk tokens...");
-    console.log(`⏰ Time: ${new Date().toLocaleTimeString()}`); // Log time to ensure activity is ongoing
+    console.log(`⏰ Time: ${new Date().toLocaleTimeString()}`);
     try {
       await runCheck();
     } catch (e) {
