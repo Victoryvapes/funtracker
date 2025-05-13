@@ -40,7 +40,7 @@ async function getTokenData(tokenAddress) {
 // Function to check if the token is eligible based on specific conditions
 function isEligible(token) {
   const ageMin = (Date.now() - token.pairCreatedAt) / 60000; // Calculate token age in minutes
-  return token.marketCap > 15000 && ageMin < 10; // Token must have market cap > 15k and age < 10 minutes
+  return token.marketCap > 15000 && ageMin < 180; // Token must have market cap > 15k and age < 10 minutes
 }
 
 // Function to send the token data to Discord via webhook
