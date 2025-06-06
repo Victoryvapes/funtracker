@@ -9,7 +9,7 @@ process.on("unhandledRejection", (reason, promise) => {
   console.error("❌ Unhandled Rejection:", reason);
 });
 
-const WEBHOOK_URL = 'https://discord.com/api/webhooks/1371399420180172852/_8Q6GCxYJXEFV8wHuKUf4d3Z9qkzJFrRY-9h06N9EQHY-8bnWhnO9j448fD15-tSKYpB'; // Replace with your webhook
+const WEBHOOK_URL =// Replace with your webhook
 const CHECK_INTERVAL_MS = 30_000; // 30 seconds interval for checking tokens
 const checkedTokens = new Set();
 
